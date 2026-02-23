@@ -97,4 +97,14 @@ public class SmartDoorLockTest {
         blockDoorWithDefaultPin();
         assertThrows(BlockedDoorCannotBeUnlocked.class, () -> smartDoorLock.unlock(CORRECT_CODE));
     }
+
+    @Test
+    public void testUponSuccessfullyUnlockFailedAttemptsGetReset(){
+        final int zeroAttemptsFailed = 0;
+        lockDoorWithPin();
+        smartDoorLock.unlock(WRONG_CODE);
+        smartDoorLock.unlock(WRONG_CODE);
+        smartDoorLock.unlock(CORRECT_CODE);
+        assertEquals(zeroAttemptsFailed, smartDoorLock.getFailedAttempts());
+    }
 }

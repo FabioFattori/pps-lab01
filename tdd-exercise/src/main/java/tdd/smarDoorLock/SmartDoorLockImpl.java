@@ -43,6 +43,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
         if (this.pin == pin) {
             currentDoorState = DoorState.unlocked;
+            failedAttempts = 0;
             return;
         }
 
