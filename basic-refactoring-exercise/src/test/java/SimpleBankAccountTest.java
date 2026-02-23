@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SimpleBankAccountTest {
 
-    private static final int DEFAULT_AMOUNT_TO_DEPOSIT = 100;
-    private static final double ACCOUNT_INITIAL_BALANCE = 0;
-    private static final int WRONG_ACCOUNT_ID = 2;
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
+    protected static final int DEFAULT_AMOUNT_TO_DEPOSIT = 100;
+    protected static final double ACCOUNT_INITIAL_BALANCE = 0;
+    protected static final int WRONG_ACCOUNT_ID = 2;
+    protected AccountHolder accountHolder;
+    protected BankAccount bankAccount;
 
     @BeforeEach
     void beforeEach() {
@@ -27,11 +27,11 @@ class SimpleBankAccountTest {
         bankAccount = new SimpleBankAccount(accountHolder, ACCOUNT_INITIAL_BALANCE);
     }
 
-    private void doDefaultDeposit() {
+    protected void doDefaultDeposit() {
         bankAccount.deposit(accountHolder.id(), DEFAULT_AMOUNT_TO_DEPOSIT);
     }
 
-    private void doWithdrawInCorrectAccount(final double amountToWithdraw){
+    protected void doWithdrawInCorrectAccount(final double amountToWithdraw){
         bankAccount.withdraw(accountHolder.id(), amountToWithdraw);
     }
 
@@ -57,7 +57,7 @@ class SimpleBankAccountTest {
     @Test
     void testWithdraw() {
         final int AMOUNT_TO_WITHDRAW = 70;
-        final int EXPECTED_REMAINING_AMOUNT = DEFAULT_AMOUNT_TO_DEPOSIT - AMOUNT_TO_WITHDRAW - SimpleBankAccount.WITHDRAW_FEE;
+        final int EXPECTED_REMAINING_AMOUNT = DEFAULT_AMOUNT_TO_DEPOSIT - AMOUNT_TO_WITHDRAW;
         doDefaultDeposit();
         doWithdrawInCorrectAccount(AMOUNT_TO_WITHDRAW);
         assertEquals(EXPECTED_REMAINING_AMOUNT, bankAccount.getBalance());
