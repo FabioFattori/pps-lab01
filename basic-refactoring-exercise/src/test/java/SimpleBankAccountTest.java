@@ -19,11 +19,7 @@ class SimpleBankAccountTest {
 
     @BeforeEach
     void beforeEach() {
-        final int ACCOUNT_ID = 1;
-        final String USER_NAME = "Mario";
-        final String USER_SURNAME = "Rossi";
-
-        accountHolder = new AccountHolder(USER_NAME, USER_SURNAME, ACCOUNT_ID);
+        accountHolder = new AccountHolder("Mario", "Rossi", 1);
         bankAccount = new SimpleBankAccount(accountHolder, ACCOUNT_INITIAL_BALANCE);
     }
 
@@ -31,13 +27,9 @@ class SimpleBankAccountTest {
         bankAccount.deposit(accountHolder.id(), DEFAULT_AMOUNT_TO_DEPOSIT);
     }
 
-    protected void doWithdrawInCorrectAccount(final double amountToWithdraw) {
-        bankAccount.withdraw(accountHolder.id(), amountToWithdraw);
-    }
-
     protected void assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(double expectedAmount, double toWithdraw) {
         doDefaultDeposit();
-        doWithdrawInCorrectAccount(toWithdraw);
+        bankAccount.withdraw(accountHolder.id(), toWithdraw);
         assertEquals(expectedAmount, bankAccount.getBalance());
     }
 
@@ -54,45 +46,45 @@ class SimpleBankAccountTest {
 
     @Test
     void testWrongDeposit() {
-        final int AMOUNT_TO_DEPOSIT_IN_WRONG_ACCOUNT = 50;
+        final int amountToDepositInWrongAccount = 50;
         doDefaultDeposit();
-        bankAccount.deposit(WRONG_ACCOUNT_ID, AMOUNT_TO_DEPOSIT_IN_WRONG_ACCOUNT);
+        bankAccount.deposit(WRONG_ACCOUNT_ID, amountToDepositInWrongAccount);
         assertEquals(DEFAULT_AMOUNT_TO_DEPOSIT, bankAccount.getBalance());
     }
 
     @Test
     void testWithdraw() {
-        final int AMOUNT_TO_WITHDRAW = 70;
-        final int EXPECTED_REMAINING_AMOUNT = DEFAULT_AMOUNT_TO_DEPOSIT - AMOUNT_TO_WITHDRAW;
+        final int amountToWithdraw = 70;
+        final int expectedRemainingAmount = DEFAULT_AMOUNT_TO_DEPOSIT - amountToWithdraw;
         assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
-                EXPECTED_REMAINING_AMOUNT,
-                AMOUNT_TO_WITHDRAW
+                expectedRemainingAmount,
+                amountToWithdraw
         );
     }
 
     @Test
     void testWrongWithdraw() {
-        final int AMOUNT_TO_WITHDRAW_IN_WRONG_ACCOUNT = 70;
+        final int amountToWithdrawInWrongAccount = 70;
         doDefaultDeposit();
-        bankAccount.withdraw(WRONG_ACCOUNT_ID, AMOUNT_TO_WITHDRAW_IN_WRONG_ACCOUNT);
+        bankAccount.withdraw(WRONG_ACCOUNT_ID, amountToWithdrawInWrongAccount);
         assertEquals(DEFAULT_AMOUNT_TO_DEPOSIT, bankAccount.getBalance());
     }
 
     @Test
     void testNegativeAmountWithdraw() {
-        final int AMOUNT_TO_WITHDRAW = -100;
+        final int amountToWithdraw = -100;
         assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
                 DEFAULT_AMOUNT_TO_DEPOSIT,
-                AMOUNT_TO_WITHDRAW
+                amountToWithdraw
         );
     }
 
     @Test
     void testZeroAmountToWithdraw() {
-        final int AMOUNT_TO_WITHDRAW = 0;
+        final int amountToWithdraw = 0;
         assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
                 DEFAULT_AMOUNT_TO_DEPOSIT,
-                AMOUNT_TO_WITHDRAW
+                amountToWithdraw
         );
     }
 }

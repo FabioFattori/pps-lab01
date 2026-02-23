@@ -14,7 +14,7 @@ public class FeedBankAccount extends SimpleBankAccount {
 
     @Override
     protected double getMinimalWithdrawAmount() {
-        return 1;
+        return WITHDRAW_FEE;
     }
 
     @Override

@@ -11,8 +11,12 @@ public class FeeBankAccountTest extends SimpleBankAccountTest {
 
     @Override
     void testWithdraw() {
-        final int AMOUNT_TO_WITHDRAW = 70;
-        final int EXPECTED_REMAINING_AMOUNT = DEFAULT_AMOUNT_TO_DEPOSIT - AMOUNT_TO_WITHDRAW - FeedBankAccount.WITHDRAW_FEE;
-        assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(EXPECTED_REMAINING_AMOUNT, AMOUNT_TO_WITHDRAW);
+        final int amountToWithdraw = 70;
+        final int expectedRemainingAmount =
+                DEFAULT_AMOUNT_TO_DEPOSIT - amountToWithdraw - FeedBankAccount.WITHDRAW_FEE;
+        assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
+                expectedRemainingAmount,
+                amountToWithdraw
+        );
     }
 }
