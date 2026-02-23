@@ -31,8 +31,14 @@ class SimpleBankAccountTest {
         bankAccount.deposit(accountHolder.id(), DEFAULT_AMOUNT_TO_DEPOSIT);
     }
 
-    protected void doWithdrawInCorrectAccount(final double amountToWithdraw){
+    protected void doWithdrawInCorrectAccount(final double amountToWithdraw) {
         bankAccount.withdraw(accountHolder.id(), amountToWithdraw);
+    }
+
+    protected void assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(double expectedAmount, double toWithdraw) {
+        doDefaultDeposit();
+        doWithdrawInCorrectAccount(toWithdraw);
+        assertEquals(expectedAmount, bankAccount.getBalance());
     }
 
     @Test
@@ -58,9 +64,10 @@ class SimpleBankAccountTest {
     void testWithdraw() {
         final int AMOUNT_TO_WITHDRAW = 70;
         final int EXPECTED_REMAINING_AMOUNT = DEFAULT_AMOUNT_TO_DEPOSIT - AMOUNT_TO_WITHDRAW;
-        doDefaultDeposit();
-        doWithdrawInCorrectAccount(AMOUNT_TO_WITHDRAW);
-        assertEquals(EXPECTED_REMAINING_AMOUNT, bankAccount.getBalance());
+        assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
+                EXPECTED_REMAINING_AMOUNT,
+                AMOUNT_TO_WITHDRAW
+        );
     }
 
     @Test
@@ -72,18 +79,20 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testNegativeAmountWithdraw(){
+    void testNegativeAmountWithdraw() {
         final int AMOUNT_TO_WITHDRAW = -100;
-        doDefaultDeposit();
-        doWithdrawInCorrectAccount(AMOUNT_TO_WITHDRAW);
-        assertEquals(DEFAULT_AMOUNT_TO_DEPOSIT,bankAccount.getBalance());
+        assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
+                DEFAULT_AMOUNT_TO_DEPOSIT,
+                AMOUNT_TO_WITHDRAW
+        );
     }
 
     @Test
-    void testZeroAmountToWithdraw(){
+    void testZeroAmountToWithdraw() {
         final int AMOUNT_TO_WITHDRAW = 0;
-        doDefaultDeposit();
-        doWithdrawInCorrectAccount(AMOUNT_TO_WITHDRAW);
-        assertEquals(DEFAULT_AMOUNT_TO_DEPOSIT,bankAccount.getBalance());
+        assertBalanceIsEqualToExpectedAmountAfterDefaultDepositAndWithdraw(
+                DEFAULT_AMOUNT_TO_DEPOSIT,
+                AMOUNT_TO_WITHDRAW
+        );
     }
 }
