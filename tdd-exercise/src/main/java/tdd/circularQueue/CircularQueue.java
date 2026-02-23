@@ -1,4 +1,4 @@
-package tdd;
+package tdd.circularQueue;
 
 /**
  *  Task 3 - TDD for Circular Queue
@@ -13,4 +13,18 @@ package tdd;
  *   - Introduce methods in the interface in order to make the tests pass.
  *   - Refactor
  */
-public interface CircularQueue { }
+public interface CircularQueue {
+    void add(int element);
+
+    int size();
+
+    int getNextElementToBeRemoved();
+
+    boolean isEmpty();
+
+    void removeNextElement();
+
+    int getNextPositionValue();
+
+    int getNumberOfFilledPositions();
+}
