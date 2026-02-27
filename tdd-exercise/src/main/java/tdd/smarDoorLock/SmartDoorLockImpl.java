@@ -21,11 +21,11 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     @Override
     public void setPin(int pin) {
         if (!isPinValid(pin)) {
-            throw new InvalidDoorPinWasPassed(pin);
+            throw new InvalidDoorPinWasPassedException(pin);
         }
 
         if (!isUnlocked()) {
-            throw new DoorPinCannotBeSetInCurrentState(currentDoorState);
+            throw new DoorPinCannotBeSetInCurrentStateException(currentDoorState);
         }
 
         this.pin = pin;
@@ -34,11 +34,11 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     @Override
     public void unlock(int pin) {
         if (isBlocked()) {
-            throw new BlockedDoorCannotBeUnlocked();
+            throw new BlockedDoorCannotBeUnlockedException();
         }
 
         if (this.pin == null) {
-            throw new DoorCannotBeUnlockedWithoutPin();
+            throw new DoorCannotBeUnlockedWithoutPinException();
         }
 
         if (this.pin == pin) {
@@ -58,9 +58,9 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     }
 
     @Override
-    public void lock() throws DoorCannotBeLockedWithoutPin {
+    public void lock() throws DoorCannotBeLockedWithoutPinException {
         if (pin == null) {
-            throw new DoorCannotBeLockedWithoutPin();
+            throw new DoorCannotBeLockedWithoutPinException();
         }
         currentDoorState = DoorState.locked;
     }

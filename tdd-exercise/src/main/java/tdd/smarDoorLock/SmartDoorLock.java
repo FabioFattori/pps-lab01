@@ -1,6 +1,6 @@
 package tdd.smarDoorLock;
 
-import tdd.smarDoorLock.exceptions.DoorCannotBeLockedWithoutPin;
+import tdd.smarDoorLock.exceptions.DoorCannotBeLockedWithoutPinException;
 
 /**
  * Task 1 - TDD for Smart Door Lock
@@ -32,7 +32,7 @@ public interface SmartDoorLock {
      * Locks the door.
      * If the pin is not set, an exception is thrown.
      */
-    void lock() throws DoorCannotBeLockedWithoutPin;
+    void lock() throws DoorCannotBeLockedWithoutPinException;
 
     /**
      * Checks if the door is currently locked.

@@ -32,7 +32,7 @@ public class SmartDoorLockTest {
 
     @Test
     public void testWithoutPinTheDoorCannotBeLocked() {
-        assertThrows(DoorCannotBeLockedWithoutPin.class, () -> smartDoorLock.lock());
+        assertThrows(DoorCannotBeLockedWithoutPinException.class, () -> smartDoorLock.lock());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SmartDoorLockTest {
 
     @Test
     public void testWithoutPinTheDoorCannotBeUnlocked() {
-        assertThrows(DoorCannotBeUnlockedWithoutPin.class, () -> smartDoorLock.unlock(CORRECT_CODE));
+        assertThrows(DoorCannotBeUnlockedWithoutPinException.class, () -> smartDoorLock.unlock(CORRECT_CODE));
     }
 
     @Test
@@ -53,15 +53,15 @@ public class SmartDoorLockTest {
     @Test
     public void testAPinCanOnlyBeSetWhenDoorIsUnlocked() {
         lockDoorWithPin();
-        assertThrows(DoorPinCannotBeSetInCurrentState.class, () -> smartDoorLock.setPin(CORRECT_CODE));
+        assertThrows(DoorPinCannotBeSetInCurrentStateException.class, () -> smartDoorLock.setPin(CORRECT_CODE));
     }
 
     @Test
     public void testAcceptedPinAreCodesOfFourDigitsLong() {
         final int threeDigitsLongCode = 982;
         final int fiveDigitsLongCode = 98123;
-        assertThrows(InvalidDoorPinWasPassed.class, () -> smartDoorLock.setPin(threeDigitsLongCode));
-        assertThrows(InvalidDoorPinWasPassed.class, () -> smartDoorLock.setPin(fiveDigitsLongCode));
+        assertThrows(InvalidDoorPinWasPassedException.class, () -> smartDoorLock.setPin(threeDigitsLongCode));
+        assertThrows(InvalidDoorPinWasPassedException.class, () -> smartDoorLock.setPin(fiveDigitsLongCode));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class SmartDoorLockTest {
     @Test
     public void testBlockedDoorCannotBeUnlockedManually(){
         blockDoorWithDefaultPin();
-        assertThrows(BlockedDoorCannotBeUnlocked.class, () -> smartDoorLock.unlock(CORRECT_CODE));
+        assertThrows(BlockedDoorCannotBeUnlockedException.class, () -> smartDoorLock.unlock(CORRECT_CODE));
     }
 
     @Test
